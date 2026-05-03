@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Faça login ou cadastre-se</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}">
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  /* Estilos adicionais para as abas e alertas que não estavam no CSS original */
+  .auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  .tab-btn.active {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border-color: rgba(255,255,255,0.3);
+  }
+  .auth-alert {
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    display: none;
+  }
+  .auth-alert.show {
+    display: block;
+  }
+  .auth-alert.error {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff8888;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+  }
+  .auth-alert.success {
+    background: rgba(0, 255, 0, 0.2);
+    color: #88ff88;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+  }
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+    display: none;
+  }
+  .spinner.show {
+    display: block;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* Ajuste para o container do Google */
+  #google-login-container {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  /* Garantir que o botão submit seja clicável quando não desabilitado */
+  .submit:not(:disabled) {
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- vídeo -->
+<video autoplay muted loop playsinline>
+  <source src="{{ url_for('static', filename='icons/background.mp4') }}" type="video/mp4">
+</video>
+
+<!-- furos--> <div class="holes"></div>
+
+<!-- topo -->
+<div class="top"><img class="logo-header" src="{{ url_for('static', filename='icons/logo.png') }}"><span>Luya</span></div>
+
+<!-- centro -->
+<div class="container">
+
+  <div class="icon"><img class="logo" src="{{ url_for('static', filename='icons/logo.png') }}"></div>
+
+  <h1>Entrar ou cadastrar-se</h1>
+  <p class="subtitle">Faça login ou cadastre-se para começar usar a Luya</p>
+
+  <!-- Google Sign-In Button -->
+  <div id="google-login-container"></div>
+
+  <div class="divider">Ou</div>
+
+  <!-- Tabs para Login/Cadastro -->
+  <div class="auth-tabs">
+    <button class="tab-btn active" id="tab-login">Entrar</button>
+    <button class="tab-btn" id="tab-register">Cadastrar</button>
+  </div>
+
+  <!-- Login Form -->
+  <form id="login-form" style="display: block;">
+    <input type="email" id="login-email" placeholder="E-mail" required>
+    <input type="password" id="login-password" placeholder="Senha" required>
+    <div id="login-alert" class="auth-alert"></div>
+    <button type="submit" class="submit" id="login-submit-btn">Entrar</button>
+    <div id="login-spinner" class="spinner"></div>
+  </form>
+
+  <!-- Register Form -->
+  <form id="register-form" style="display: none;">
+    <input type="text" id="register-name" placeholder="Nome completo" required>
+    <input type="email" id="register-email" placeholder="E-mail" required>
+    <input type="password" id="register-password" placeholder="Senha" required>
+    <input type="password" id="register-confirm" placeholder="Confirmar senha" required>
+    <div id="register-alert" class="auth-alert"></div>
+    <button type="submit" class="submit" id="register-submit-btn">Cadastrar</button>
+    <div id="register-spinner" class="spinner"></div>
+  </form>
+
+</div>
+
+<!-- rodapé -->
+<div class="footer">
+  <div class="footer-content">
+    <img src="{{ url_for('static', filename='icons/np.png') }}" alt="Nordes Logo" class="footer-logo">
+    <div class="footer-text">from Nordes</div>
+  </div>
+
+  <div class="footer-links">
+    <a href="/termos">Termos de uso</a>
+    <a href="/privacidade">Privacidade</a>
+    <a href="/suporte">Suporte</a>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script/global/not-zoom.js') }}"></script>
+<script src="{{ url_for('static', filename='script/auth.js') }}"></script>
+<script src="{{ url_for('static', filename='script/login.js') }}"></script>
+</body>
+</html>
